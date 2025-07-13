@@ -23,3 +23,17 @@ AI_interview/
 ```
 
 
+
+---
+
+## 설치
+
+```bash
+
+git clone https://github.com/DopeorNope-Lee/AI_interview
+
+cd AI_interview
+
+pip install -r requirements.txt
+```
+
