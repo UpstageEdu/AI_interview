@@ -47,7 +47,7 @@ CSV 한 개만 준비하면 → 학습 → 4-bit 양자화 → 추론까지 바�
 
     python train.py
 
-- 10 % 샘플링 후 train/val = 99 : 1  
+- train/val = 99 : 1  
 - 배치 1 × gradient_accumulation_steps 32  
 - 1 에폭마다 평가 & 체크포인트(`checkpoints/gpt2-lora/...`) 저장
 
