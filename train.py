@@ -30,7 +30,6 @@ def main(cfg = CONFIG):
     print("🔹 CSV 로드")
     df = pd.read_csv(cfg["csv_path"]).dropna(subset=["question","answer","summary"])
     
-    df=df.sample(frac=0.1,random_state=42).reset_index(drop=True)
     
     ds_raw = Dataset.from_pandas(df).train_test_split(test_size=cfg["val_split"], seed=42)
 
