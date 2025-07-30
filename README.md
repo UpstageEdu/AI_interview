@@ -73,7 +73,7 @@ python train.py \
 
 ---
 
-## LoRA → 4-bit 양자화
+## 4-bit 양자화
 
 ```bash
 python quantization.py \
