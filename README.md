@@ -5,7 +5,17 @@ CSV 한 개만 준비하면 → 학습 → 4-bit 양자화 → 추론까지 바�
 
 ---
 
-## 디렉터리 구조
+## 사전 요구사항
+
+- **Python**: 3.11.8 이상
+- **GPU**: CUDA 지원 GPU (권장, 최소 12GB VRAM, (fp16 + grad-accum 32))
+
+### 운영체제
+- Windows 10/11
+- macOS 10.15 이상
+- Ubuntu 18.04 이상
+
+## 프로젝트 구조
 
     AI_interview/
     ├── train.py                # LoRA 학습
@@ -21,15 +31,23 @@ CSV 한 개만 준비하면 → 학습 → 4-bit 양자화 → 추론까지 바�
 
 ---
 
-## 설치
+## 빠른 시작
 
-    python -m venv venv
-    source venv/bin/activate
+```bash
+# 1. 저장소 클론 & 의존성 설치
+$ git clone <repository-url>
+$ cd AI_interview
+$ python setup.py
 
-    pip install torch transformers datasets peft bitsandbytes \
-                 evaluate rouge_score nltk sacrebleu
+# 2. 기본 설정으로 학습 (GPU 권장)
+$ python train.py
 
-> **GPU 12 GB 이상**을 권장합니다 (fp16 + grad-accum 32).
+# 3. 4‑bit 양자화 (선택)
+$ python quantization.py 
+
+# 4. 추론
+$ python inference.py
+```
 
 ---
 
@@ -43,9 +61,11 @@ CSV 한 개만 준비하면 → 학습 → 4-bit 양자화 → 추론까지 바�
 
 ---
 
-## 학습
+## 모델 학습
 
-    python train.py
+```bash
+python train.py \
+```
 
 - train/val = 99 : 1  
 - 배치 1 × gradient_accumulation_steps 32  
@@ -55,8 +75,23 @@ CSV 한 개만 준비하면 → 학습 → 4-bit 양자화 → 추론까지 바�
 
 ## LoRA → 4-bit 양자화
 
-    python quantization.py
-    # 결과: checkpoints/gpt2-bnb-4bit/
+```bash
+python quantization.py \
+```
+
+경로 오류 발생 시, 아래 경로를 확인 후 quantization.py 파일에서 경로를 수정해주세요!
+
+```
+%ls model-checkpoints/gpt2-lora/
+```
+
+```
+CONFIG = dict(
+    base_model = "gpt2",
+    lora_dir   = "checkpoints/gpt2-lora/checkpoint-100", # 이 부분에서 경로 설정!
+    save_dir   = "checkpoints/gpt2-bnb-4bit",
+)
+```
 
 ---
 
