@@ -32,7 +32,7 @@ def main(cfg = CONFIG):
     out = model.generate(**ids, max_new_tokens=120, temperature=0.2, top_p=0.9)
     summary = tok.decode(out[0], skip_special_tokens=True)\
                  .split("### Response:\n")[-1].strip()
-    print("\n📄 요약:\n", summary)
+    print("\n요약:\n", summary)
 
 if __name__ == "__main__":
     main()
