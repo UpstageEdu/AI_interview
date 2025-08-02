@@ -29,7 +29,7 @@ def main(cfg = CONFIG):
     Path(cfg["save_dir"]).mkdir(parents=True, exist_ok=True)
     q_model.save_pretrained(cfg["save_dir"])
     tok.save_pretrained(cfg["save_dir"])
-    print("✅ 4-bit 모델 저장 →", cfg["save_dir"])
+    print("4-bit 모델 저장 →", cfg["save_dir"])
 
 if __name__ == "__main__":
     main()
