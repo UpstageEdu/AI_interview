@@ -18,16 +18,16 @@
 ## 프로젝트 구조
 
 ```
-    # 깃허브 레포 다운
-    git clone https://github.com/DopeorNope-Lee/AI_interview
-    cd AI_interview
-    # 가상환경 설정
-    conda create -n ai_interview python=3.11.8 -y
-    conda activate ai_interview
-    # 의존성 설치
-    pip install -r requirements.txt
-    # 환경설정
-    python setup.py
+# 깃허브 레포 다운
+git clone https://github.com/DopeorNope-Lee/AI_interview
+cd AI_interview
+# 가상환경 설정
+conda create -n ai_interview python=3.11.8 -y
+conda activate ai_interview
+# 의존성 설치
+pip install -r requirements.txt
+# 환경설정
+python setup.py
 ```
 
 ```text
