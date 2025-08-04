@@ -40,7 +40,7 @@ def main(cfg = CONFIG):
         return tokenize_alpaca(batch, tokenizer=tok)
 
 
-    print("🔹 프롬프팅+토크나이즈")
+    print("프롬프팅+토크나이즈")
     ds_tok = ds_raw.map(
        _tok,                                # ← tokenizer 주입
         batched=True,
