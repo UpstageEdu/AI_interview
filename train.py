@@ -27,7 +27,7 @@ CONFIG = dict(
 )
 
 def main(cfg = CONFIG):
-    print("🔹 CSV 로드")
+    print("CSV 로드")
     df = pd.read_csv(cfg["csv_path"]).dropna(subset=["question","answer","summary"])
     
     
@@ -40,7 +40,7 @@ def main(cfg = CONFIG):
         return tokenize_alpaca(batch, tokenizer=tok)
 
 
-    print("🔹 프롬프팅+토크나이즈")
+    print("프롬프팅+토크나이즈")
     ds_tok = ds_raw.map(
        _tok,                                # ← tokenizer 주입
         batched=True,
@@ -90,7 +90,7 @@ def main(cfg = CONFIG):
 
     lora.save_pretrained(cfg["save_dir"])
     tok.save_pretrained(cfg["save_dir"])
-    print("✅ LoRA 어댑터 저장 →", cfg["save_dir"])
+    print("LoRA 어댑터 저장 →", cfg["save_dir"])
 
 
 if __name__ == "__main__":

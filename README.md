@@ -17,6 +17,18 @@
 
 ## 프로젝트 구조
 
+```
+    # 깃허브 레포 다운
+    git clone https://github.com/DopeorNope-Lee/AI_interview
+    cd AI_interview
+    # 가상환경 설정
+    conda create -n ai_interview python=3.11.8 -y
+    conda activate ai_interview
+    # 라이브러리 및 의존성 설치
+    pip install -r requirements.txt
+    python setup.py
+```
+
 ```text
 AI_interview/
 ├── train.py              # LoRA 학습 스크립트
