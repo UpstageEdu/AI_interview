@@ -24,8 +24,9 @@
     # 가상환경 설정
     conda create -n ai_interview python=3.11.8 -y
     conda activate ai_interview
-    # 라이브러리 및 의존성 설치
+    # 의존성 설치
     pip install -r requirements.txt
+    # 환경설정
     python setup.py
 ```
 
