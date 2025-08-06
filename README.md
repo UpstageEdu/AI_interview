@@ -16,10 +16,14 @@
 -   **운영체제**: Windows 10/11, macOS 10.15+, Ubuntu 18.04+
 
 ## 프로젝트 구조
+1. `cd 커맨드 사용 시, 본인이 압축을 푼 디렉토리로 이동해야 합니다.`
 
+2. conda 가상환경을 만듭니다.
+
+3. `pip install -r requirements.txt`와 `python setup.py` 스크립트로 기본 환경을 설정합니다.
+    - `pip install -r requirements.txt`: 라이브러리 설치
+    - `python setup.py`: 폴더 생성 및 환경 셋팅
 ```
-# 깃허브 레포 다운
-git clone https://github.com/DopeorNope-Lee/AI_interview
 cd AI_interview
 # 가상환경 설정
 conda create -n ai_interview python=3.11.8 -y
