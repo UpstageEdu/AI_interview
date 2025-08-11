@@ -11,7 +11,7 @@ from utils.prompts import TEMPLATE
 
 CONFIG = dict(
    # 'ckpt' 대신 최종 모델 경로를 사용합니다.
-   model_path = "checkpoints/gpt2-bnb-4bit",
+   model_path = "checkpoints/gpt2-lora/checkpoint-100",
    question = "팀 내 갈등을 해결한 경험이 있나요?",
    answer   = "프로젝트 일정 지연 때 의견 충돌이 있었지만 원만하게 해결하기 위해, 모두에게 친절하고, 스스로 일도 열심히 했던 경험이 있습니다.",
 )
