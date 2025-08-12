@@ -1,6 +1,2 @@
 # utils/prompts.py
-TEMPLATE = (
-    "### Instruction:\n{instruction}\n\n"
-    "### Input:\n{input}\n\n"
-    "### Response:\n"
-)
+TEMPLATE = "{instruction}{input}{response_start_token}"
