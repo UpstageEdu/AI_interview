@@ -1,30 +1,62 @@
 # utils/data.py
 from utils.prompts import TEMPLATE
 
-def _make_prompt(q: str, a: str) -> str:
+
+def _make_prompt(
+    text: str,
+    instruction: str = "Summarize the following text in 1–2 sentences.\n\n",
+    response_start_token: str = "\n\nTL;DR: ",
+) -> str:
     return TEMPLATE.format(
-        instruction="다음 면접 질문과 답변을 읽고 한국어로 간결하게 요약하세요.",
-        input=f"질문: {q}\n답변: {a}"
+        instruction=instruction,
+        input=text.strip(),
+        response_start_token=response_start_token,
     )
 
-def tokenize_alpaca(batch, tokenizer, max_len=1024,
-                    prompt_max=880, summary_max=120):
-    """
-    ★ 1024 토큰 절대 초과 방지
-    ★ 배치(list) 입력 전용
-    """
-    ins, labs = [], []
-    for q, a, s in zip(batch["question"], batch["answer"], batch["summary"]):
-        p = tokenizer(_make_prompt(q, a), add_special_tokens=False).input_ids[:prompt_max]
-        y = tokenizer(s.strip(), add_special_tokens=False).input_ids[:summary_max]
-        y += [tokenizer.eos_token_id]
 
-        overflow = len(p) + len(y) - max_len
+def tokenize_summarize(
+    batch,
+    tokenizer,
+    max_len=1024,
+    ignore_index=-100,
+    padding=False,
+):
+    ins, masks, labs = [], [], []
+    for review, summary in zip(batch["review"], batch["summary"]):
+        input_prompt = _make_prompt(text=review)
+        tokenized_input_prompt = tokenizer.encode(input_prompt)
+        input_prompt_length = len(tokenized_input_prompt)
+
+        tokenized_label = tokenizer.encode(summary) + [tokenizer.eos_token_id]
+        response_length = len(tokenized_label)
+
+        input_length = input_prompt_length + response_length
+
+        overflow = input_length - max_len
         if overflow > 0:
-            p = p[overflow:]                  # prompt 앞부분 잘라서 길이 맞춤
+            tokenized_input_prompt = tokenized_input_prompt[:-overflow]
 
-        ids = p + y
-        ins.append(ids)
-        labs.append([-100] * len(p) + y)
+        input_ids = tokenized_input_prompt + tokenized_label
+        labels = [ignore_index] * len(tokenized_input_prompt) + tokenized_label[:]
+        attention_masks = (
+            [1] * len(input_ids)
+            if not padding
+            else [1] * len(input_ids) + [0] * (max_len - len(input_ids))
+        )
 
-    return {"input_ids": ins, "labels": labs}
+        if padding:
+            if len(input_ids) < max_len:  # padding
+                input_ids += [tokenizer.pad_token_id] * (max_len - len(input_ids))
+            if len(labels) < max_len:  # padding
+                labels += [ignore_index] * (max_len - len(labels))
+
+        if len(input_ids) > max_len:
+            import pdb
+
+            pdb.set_trace()
+
+        ins.append(input_ids)
+        masks.append(attention_masks)
+        labs.append(labels)
+
+    return {"input_ids": ins, "attention_masks": masks, "labels": labs}
