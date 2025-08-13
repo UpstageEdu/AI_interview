@@ -38,8 +38,6 @@ CONFIG = dict(
 
 def main(cfg=CONFIG):
     print("CSV 로드")
-    # FIXME: 학습 시간이 너무 길다면 아래 학습량을 조절해주세요.
-    data_size = 100_000
     df = (
         pd.read_csv(cfg["csv_path"], index_col=0)
         .dropna(subset=["Text", "Summary"])
