@@ -32,6 +32,7 @@ CONFIG = dict(
     epochs=1,
     lr=1e-5,
     val_split=0.01,
+    data_size = 2000 # 학습에 활용할 데이터의 크기를 정할 수 있습니다.
 )
 
 
@@ -42,7 +43,7 @@ def main(cfg=CONFIG):
     df = (
         pd.read_csv(cfg["csv_path"], index_col=0)
         .dropna(subset=["Text", "Summary"])
-        .loc[:data_size, ["Text", "Summary"]]
+        .loc[:cfg["data_size"], ["Text", "Summary"]]
         .rename(columns={"Text": "review", "Summary": "summary"})
     )
 
