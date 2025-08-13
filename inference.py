@@ -62,7 +62,16 @@ def main(cfg=CONFIG):
     ).to(model.device)
     
     print("요약 생성 중...")
-    out = model.generate(**ids, max_new_tokens=120, temperature=0.2, top_p=0.9)
+    out = model.generate(
+        **ids,
+        max_new_tokens=120,
+        do_sample=True,           
+        temperature=0.7,
+        top_p=0.9,
+        repetition_penalty=1.2,    
+        no_repeat_ngram_size=3,   
+        eos_token_id=tok.eos_token_id,
+    )
     summary = tok.decode(out[0], skip_special_tokens=True).split("TL;DR: ")[-1].strip()
     print("\n요약:\n", summary)
 
